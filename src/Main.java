@@ -61,7 +61,7 @@ public class Main {
         String regexPath = ".+\\.(xml)";
         try (Stream<Path> pathsStream = Files.list(Paths.get(folderPath))) {
             requiredFilesPaths = pathsStream
-                    .map(Path::toString)//проверить почему String.class::cast не прокатил
+                    .map(Path::toString)
                     .filter(path -> Pattern.matches(regexPath, path))
                     .map(Path::of)
                     .collect(Collectors.toSet());
