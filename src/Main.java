@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) throws JAXBException, IOException {
         String folderPath = getPathFromConsole();
-        Set<Path> paths = getPathsToAllXMLDocumentsInFolder(folderPath);
+        Set<Path> paths = getPathsForAllXMLDocumentsInFolder(folderPath);
         System.out.println("Paths with xml extension: " + paths);
         if (!isXMLFilesValid(paths)) {
             return;
@@ -56,7 +56,7 @@ public class Main {
         return folderPath;
     }
 
-    private static Set<Path> getPathsToAllXMLDocumentsInFolder(String folderPath) throws IOException {
+    private static Set<Path> getPathsForAllXMLDocumentsInFolder(String folderPath) throws IOException {
         Set<Path> requiredFilesPaths;
         String regexPath = ".+\\.(xml)";
         try (Stream<Path> pathsStream = Files.list(Paths.get(folderPath))) {
@@ -75,7 +75,7 @@ public class Main {
             return false;
         } else if (Files.readAllLines(paths.iterator().next()).isEmpty()) {
             return false;
-        } else return paths.stream().count() <= REQUIRED_AMOUNT_OF_FILES;
+        } else return (long) paths.size() <= REQUIRED_AMOUNT_OF_FILES;
     }
 
     private static AddressJAXB unmarshal(String pathToFile) throws FileNotFoundException, JAXBException {
